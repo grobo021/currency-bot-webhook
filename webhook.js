@@ -8,9 +8,9 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-const convertCurrency = async ({ amount, currency }, outputCurrency, cb) => {
+const convertCurrency = ({ amount, currency }, outputCurrency, cb) => {
   try {
-    const data = await JSON.parse(axios.get(`http://data.fixer.io/api/latest?access_key=${process.env.ACCESS_KEY}&base=${currency}&symbols=${outputCurrency}`));
+    const data = JSON.parse(axios.get(`http://data.fixer.io/api/latest?access_key=${process.env.ACCESS_KEY}&base=${currency}&symbols=${outputCurrency}`));
     const computedValue = Math.round(data.body.rates[outputCurrency] * amount);
     cb(null, `${amount} ${currency} converts to about ${outputCurrency} ${computedValue} as per current rates!`);
   } catch (e) {
@@ -39,20 +39,23 @@ app.post('/', (req, res) => {
       });
     }
   } else {
-      res.send({
-        fulfillmentMessages: [
-          {
-            text: {
-              text: [
-                convertCurrency(amountToConvert, outputCurrency)
-              ]
+    convertCurrency(amountToConvert, outputCurrency, (error, result) => {
+      if (!error && result) {
+        res.send({
+          fulfillmentMessages: [
+            {
+              text: {
+                text: [
+                  result
+                ]
+              }
             }
-          }
-        ]
-      });
-    }
+          ]
+        });
+      }
+    });
   }
-);
+});
 
 server.listen(port, () => {
   console.log(`Running on port ${port}`);
