@@ -14,12 +14,15 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
     const { queryResult } = req.body;
+    console.log(`1111111 ${queryResult} 1111111`);
     if (queryResult.action === 'convert') {
         const { outputCurrency, amountToConvert } = queryResult.parameters;
+        console.log(`2222222 ${queryResult.parameters} 2222222`);
 
         if (amountToConvert.currency === outputCurrency) {
             const { amount, currency } = amountToConvert;
             const response = `Well ${amount} ${currency} is obviously equal to ${amount} ${currency}`;
+            console.log(`3333333 ${response} 3333333`);
             res.send({
                 speech: response,
                 displayText: response,
