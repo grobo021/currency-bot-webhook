@@ -24,10 +24,16 @@ app.post('/', (req, res) => {
             const response = `Well ${amount} ${currency} is obviously equal to ${amount} ${currency}`;
             console.log(`3333333 ${response} 3333333`);
             res.send({
-                speech: response,
-                displayText: response,
-                source: 'moneybot-webhook'
-            });
+                fulfillmentMessages: [
+                  {
+                    text: {
+                      text: [
+                        response
+                      ]
+                    }
+                  }
+                ]
+              });
         }
     }
 });
