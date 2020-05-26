@@ -7,6 +7,11 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    console.log('####### App Started ######');
+    res.send('App started');
+});
+
 app.post('/', (req, res) => {
     const { queryResult } = req.body;
     if (queryResult.action === 'convert') {
