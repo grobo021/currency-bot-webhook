@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node webhook.js",
     "dev": "nodemon webhook.js",
-    "ngrok": "C:/Users/arora/ngrok/ngrok.exe http 3000"
+    "ngrok": "ngrok http 3000"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "ngrok": "^3.2.7",
     "nodemon": "^2.0.4"
   }
 }

@@ -11,7 +11,9 @@ app.use(express.json());
 const convertCurrency = ({ amount, currency }, outputCurrency, cb) => {
   try {
     const data = JSON.parse(axios.get(`http://data.fixer.io/api/latest?access_key=${process.env.ACCESS_KEY}&base=${currency}&symbols=${outputCurrency}`));
+    console.log(data);
     const computedValue = Math.round(data.body.rates[outputCurrency] * amount);
+    console.log(computedValue);
     cb(null, `${amount} ${currency} converts to about ${outputCurrency} ${computedValue} as per current rates!`);
   } catch (e) {
     cb(e, null);
