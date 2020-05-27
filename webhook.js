@@ -39,23 +39,25 @@ app.post('/', (req, res) => {
           }
         ]
       });
-    }
-  } else {
-    convertCurrency(amountToConvert, outputCurrency, (error, result) => {
-      if (!error && result) {
-        res.send({
-          fulfillmentMessages: [
-            {
-              text: {
-                text: [
-                  result
-                ]
+    } else {
+      convertCurrency(amountToConvert, outputCurrency, (error, result) => {
+        if (!error && result) {
+          res.send({
+            fulfillmentMessages: [
+              {
+                text: {
+                  text: [
+                    result
+                  ]
+                }
               }
-            }
-          ]
-        });
-      }
-    });
+            ]
+          });
+        } else {
+          console.log(error);
+        }
+      });
+    }
   }
 });
 
