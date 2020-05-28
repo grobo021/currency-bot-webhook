@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "start": "node webhook.js",
-    "dev": "nodemon webhook.js",
-    "ngrok": "ngrok http 3000"
+    "dev": "env-cmd -f ./config/dev.env nodemon webhook.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +15,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "ngrok": "^3.2.7",
     "nodemon": "^2.0.4"
   }

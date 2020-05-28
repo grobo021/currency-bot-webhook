@@ -8,12 +8,10 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-const convertCurrency = ({ amount, currency }, outputCurrency, cb) => {
+const convertCurrency = async ({ amount, currency }, outputCurrency, cb) => {
   try {
-    const data = JSON.parse(axios.get(`http://data.fixer.io/api/latest?access_key=${process.env.ACCESS_KEY}&base=${currency}&symbols=${outputCurrency}`));
-    console.log(data);
-    const computedValue = Math.round(data.body.rates[outputCurrency] * amount);
-    console.log(computedValue);
+    const data = await axios.get(`https://free.currconv.com/api/v7/convert?q=${currency}_${outputCurrency}&compact=ultra&apiKey=${process.env.ACCESS_KEY}`);
+    const computedValue = Math.round(data.data[`${currency}_${outputCurrency}`] * amount);
     cb(null, `${amount} ${currency} converts to about ${outputCurrency} ${computedValue} as per current rates!`);
   } catch (e) {
     cb(e, null);
